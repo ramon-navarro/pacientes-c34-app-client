@@ -45,7 +45,7 @@ export default class Login extends Component {
 					console.log(this.data);			
 					this.setState({newPasswordRequired: false});
 					this.props.userHasAuthenticated(true);
-					this.props.history.push("/");							
+					//this.props.history.push("/");							
 			} catch (e) {
 				alert(e.message);
 				this.setState({ isLoading: false });
@@ -60,7 +60,7 @@ export default class Login extends Component {
 					this.setState({ isLoading: false });
 				}else{
 					this.props.userHasAuthenticated(true);
-					this.props.history.push("/");
+					//this.props.history.push("/");
 				}
 			} catch (e) {
 				alert(e.message);
