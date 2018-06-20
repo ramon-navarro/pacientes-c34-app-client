@@ -4,6 +4,8 @@ import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 import "./index.css";
+import "./containers/cssCarlos/css/font-awesome.min.css";
+import "./containers/cssCarlos/css/wireframe.css";
 
 /*AWS Inicio*/
 import Amplify from "aws-amplify";
@@ -37,6 +39,8 @@ ReactDOM.render(
 	<Router>
 		<App />
 	</Router>,
-	document.getElementById("root")
+	document.getElementById("root"),
+	document.body.classList.add('bg-light')
+	
 );
 registerServiceWorker();

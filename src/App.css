@@ -1,7 +1,33 @@
 .App {
-	margin-top: 15px;
+	margin-top: 0px;
 }
 
-.App .navbar-brand {
+.App .navbar-inverse {
+    background-color: #3e474f;
+    border-color: #3e474f;	
+}
+
+.App .navbar-brand{
 	font-weight: bold;
+	color: #b2bbbd;
+}
+
+.App .navbar-brand:focus, .App .navbar-brand:hover {
+    color: #FFFFFF;
+    background-color: transparent;
+}
+
+.App .navbar-nav > li > a {
+    color: #b2bbbd;
+	font-weight: bold;
+}
+
+.App .navbar-nav > li > a:focus, .App .navbar-nav > li > a:hover{
+    color: #FFFFFF;	
+    background-color: transparent;
+}
+
+.App .navbar-inverse .navbar-nav > .active > a, .App .navbar-inverse .navbar-nav > .active > a:focus, .App .navbar-inverse .navbar-nav > .active > a:hover {
+    color: #fff;
+    background-color: transparent;
 }

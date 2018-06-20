@@ -46,15 +46,20 @@ class App extends Component {
 		};
 		return (
 			!this.state.isAuthenticating &&
-			<div className="App container">
-				<Navbar fluid collapseOnSelect>
+			<div className="App container" >
+				<Navbar fluid inverse collapseOnSelect>
 					<Navbar.Header>
 						<Navbar.Brand>
-							<Link to="/">RegPul</Link>
+							<Link to="/">ENOnline</Link>
 						</Navbar.Brand>
 						<Navbar.Toggle />
 					</Navbar.Header>
 					<Navbar.Collapse>
+						<Nav>
+							<LinkContainer to="/registrar/new">
+								<NavItem>Notificar</NavItem>
+							</LinkContainer>
+						</Nav>
 						<Nav pullRight>					
 							{this.state.isAuthenticated
 							? /*Si*/

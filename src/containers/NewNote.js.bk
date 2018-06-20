@@ -1,0 +1,145 @@
+import React, { Component } from "react";
+import { FormGroup, FormControl, ControlLabel, Col } from "react-bootstrap";
+import LoaderButton from "../components/LoaderButton";
+import config from "../config";
+import "./NewNote.css";
+
+export default class NewNote extends Component {
+	constructor(props) {
+		super(props);		
+		this.state = {
+			isLoading: null,
+			rut: "",
+			nombres: "",
+			apellidos: "",
+			ciudad:""
+		};
+	}
+	
+	validateForm() {
+		return this.state.rut.length > 0;
+	}
+	
+	handleChange = event => {
+		this.setState({
+			[event.target.id]: event.target.value
+		});
+	}
+
+	handleSubmit = async event => {
+		event.preventDefault();
+		alert("Enviando...");		
+		this.setState({ isLoading: true });
+	}
+
+	render() {
+		return (
+			<div className="NewNote">
+				<form onSubmit={this.handleSubmit}>
+					<FormGroup controlId="nombres">
+						<ControlLabel>Nombres</ControlLabel>{' '}
+						<FormControl type="text" placeholder="nombres" onChange={this.handleChange} value={this.state.nombres}/>						
+					</FormGroup>
+					<FormGroup controlId="apellidos">
+						<ControlLabel>Apellidos</ControlLabel>{' '}
+						<FormControl type="text" placeholder="apellidos" onChange={this.handleChange} value={this.state.apellidos}/>						
+					</FormGroup>
+					<FormGroup controlId="rut">
+						<ControlLabel>Rut</ControlLabel>{' '}
+						<FormControl type="text" placeholder="12345678-9" onChange={this.handleChange} value={this.state.rut}/>						
+					</FormGroup>
+					<FormGroup controlId="ciudad">
+						<ControlLabel>Ciudad</ControlLabel>{' '}
+						<FormControl type="text" placeholder="ciudad" onChange={this.handleChange} value={this.state.ciudad}/>						
+					</FormGroup>	
+<FormGroup controlId="formHorizontalEmail">
+    <Col componentClass={ControlLabel} sm={1}>
+      Email
+    </Col>
+    <Col sm={5}>
+      <FormControl type="email" placeholder="Email" />
+    </Col>
+  </FormGroup>					
+					<LoaderButton
+						block
+						bsStyle="primary"
+						bsSize="large"
+						disabled={!this.validateForm()}
+						type="submit"
+						isLoading={this.state.isLoading}
+						text="Create"
+						loadingText="Creating…"
+					/>
+				</form>
+			</div>
+		);
+	}
+}
+
+
+
+/* Backup
+export default class NewNote extends Component {
+	constructor(props) {
+		super(props);
+		this.file = null;
+		this.state = {
+			isLoading: null,
+			content: ""
+		};
+	}
+	
+	validateForm() {
+		return this.state.content.length > 0;
+	}
+	
+	handleChange = event => {
+		this.setState({
+			[event.target.id]: event.target.value
+		});
+	}
+
+	handleFileChange = event => {
+		this.file = event.target.files[0];
+	}
+
+	handleSubmit = async event => {
+		event.preventDefault();
+		if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
+			alert("Please pick a file smaller than 5MB");
+			return;
+		}
+		this.setState({ isLoading: true });
+	}
+
+	render() {
+		return (
+			<div className="NewNote">
+				<form onSubmit={this.handleSubmit}>
+					<FormGroup controlId="content">
+						<FormControl
+							onChange={this.handleChange}
+							value={this.state.content}
+							componentClass="textarea"
+						/>
+					</FormGroup>
+					<FormGroup controlId="file">
+						<ControlLabel>Attachment</ControlLabel>
+						<FormControl onChange={this.handleFileChange} type="file"/>
+					</FormGroup>
+					<LoaderButton
+						block
+						bsStyle="primary"
+						bsSize="large"
+						disabled={!this.validateForm()}
+						type="submit"
+						isLoading={this.state.isLoading}
+						text="Create"
+						loadingText="Creating…"
+					/>
+				</form>
+			</div>
+		);
+	}
+}
+*/
