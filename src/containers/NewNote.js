@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import { FormGroup, FormControl, ControlLabel, Col } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
+import { API } from "aws-amplify";
 import config from "../config";
 
 export default class NewNote extends Component {
 	constructor(props) {
-		super(props);		
+		super(props);
 		this.state = {
 			isLoading: null,
 			rut: "",
@@ -24,19 +25,39 @@ export default class NewNote extends Component {
 			[event.target.id]: event.target.value
 		});
 	}
-
+		
 	handleSubmit = async event => {
 		event.preventDefault();
-		alert("Enviando...");		
+		//if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
+		//	alert("Please pick a file smaller than 5MB");
+		//	return;
+		//}
 		this.setState({ isLoading: true });
+		try {
+			await this.createNote({
+			content: this.state.content
+		});
+		this.props.history.push("/");
+		} catch (e) {
+			alert(e);
+			this.setState({ isLoading: false });
+		}
 	}
+	
+	createNote(note) {
+			return API.post("notes", "/notes", {
+				body: note
+			});
+	}
+	
+	
 
 	render() {
 		return (
-		<div className="container">
+		 <div className="container">
         <div className="row">
           <div className="col-md-12 order-md-1">
-            <hr className="mb-2" />
+            <hr className="mb-2 border-dark" />
             <h4 className="mb-2">
               <b>ESTABLECIMIENTO</b>
             </h4>
@@ -59,7 +80,7 @@ export default class NewNote extends Component {
                 </div>
                 <div className="col-md-3 mb-3">
                   <label htmlFor="codigoSeremi">C&oacute;digo SEREMI</label>
-                  <input type="text" className="form-control w-75" id="codigoSeremi" required />
+                  <input type="text" className="form-control w-100" id="codigoSeremi" required />
                   <div className="invalid-feedback"> Valid last name is required. </div>
                 </div>
               </div>
@@ -80,11 +101,11 @@ export default class NewNote extends Component {
                   <div className="invalid-feedback"> Valid last name is required. </div>
                 </div>
               </div>
-              <div className="mb-3">
+              <div className="mb-3 border-dark">
                 <h4 className="mb-3">
                   <b />
                 </h4>
-                <hr className="mb-2" />
+                <hr className="mb-2 border-dark" />
                 <h4 className="mb-2">
                   <b>DATOS DE IDENTIFICACI&Oacute;N DEL PACIENTE</b>
                 </h4>
@@ -127,7 +148,7 @@ export default class NewNote extends Component {
                     <input type="text" className="form-control" id="nombreEstablecimiento" required />
                     <div className="invalid-feedback py-4"> Nombre de establecimiento es requerido. </div>
                   </div>
-                  <div className="col-md-2 mb-3"> </div>
+                  <div className="col-md-3 mb-3"> </div>
                   <div className="col-md-1 mb-3">
                     <label htmlFor="lastName">9. Edad</label>
                     <input type="text" className="form-control" id="nombreEstablecimiento" required />
@@ -152,11 +173,11 @@ export default class NewNote extends Component {
                     <div className="invalid-feedback py-4"> Nombre de establecimiento es requerido. </div>
                   </div>
                   <div className="col-md-2 mb-3">
-                    <label htmlFor="codigoNacionalidad">Codigo</label>
+                    <label htmlFor="codigoNacionalidad">C&oacute;digo</label>
                     <input type="text" className="form-control" id="codigoNacionalidad" required />
                     <div className="invalid-feedback py-4"> Nombre de establecimiento es requerido. </div>
                   </div>
-                  <div className="col-md-2 mb-3"> </div>
+                  <div className="col-md-3 mb-3"> </div>
                   <div className="col-md-4 mb-3">
                     <label htmlFor="puebloOriginario">12. PUEBLO ORIGINARIO DECLARADO</label>
                     <select className="custom-select d-block" id="state" required>
@@ -178,28 +199,28 @@ export default class NewNote extends Component {
                 <div className="row" draggable="true">
                   <div className="col-md-4 mb-3">
                     <label htmlFor="domicilio">13. DOMICILIO</label>
-                    <input type="text" className="form-control" placeholder defaultValue="Calle" required id="domicilio" />
+                    <input type="text" className="form-control" placeholder="Calle/Avenida" required id="domicilio" />
                     <div className="invalid-feedback py-4"> Direcci&oacute;n es requerida. </div>
                   </div>
                   <div className="col-md-1 mb-3">
                     <label htmlFor="numeroDomicilio">Nro.</label>
-                    <input type="text" className="form-control" id="numeroDomicilio" placeholder defaultValue="Nro." required />
+                    <input type="text" className="form-control" id="numeroDomicilio" placeholder="Nro." required />
                     <div className="invalid-feedback"> Valid last name is required. </div>
                   </div>
                   <div className="col-md-1 mb-3">
                     <label htmlFor="numeroDepto">Depto.</label>
-                    <input type="text" className="form-control" id="numeroDepto" placeholder defaultValue="Depto." required />
+                    <input type="text" className="form-control" id="numeroDepto" placeholder required />
                     <div className="invalid-feedback"> Valid last name is required. </div>
                     <div className="col-md-3 mb-3"> </div>
                   </div>
                   <div className="col-md-3 mb-3">
                     <label htmlFor="poblacion">Poblaci&oacute;n</label>
-                    <input type="text" className="form-control" id="poblacion" placeholder defaultValue="Poblaci&oacute;n" required draggable="true" />
+                    <input type="text" className="form-control" id="poblacion" placeholder required />
                     <div className="invalid-feedback"> Valid last name is required. </div>
                   </div>
                   <div className="col-md-3 mb-3">
                     <label htmlFor="codigoPostal">C&oacute;digo Postal</label>
-                    <input type="text" className="form-control" id="codigoPostal" placeholder defaultValue="C&oacute;digo Postal" required />
+                    <input type="text" className="form-control" id="codigoPostal" placeholder required />
                     <div className="invalid-feedback"> Valid last name is required. </div>
                   </div>
                 </div>
@@ -255,7 +276,7 @@ export default class NewNote extends Component {
                     <div className="invalid-feedback"> Please provide a valid state. </div>
                   </div>
                 </div>
-                <hr className="mb-2" />
+                <hr className="mb-2 border-dark" />
                 <h4 className="mb-2">
                   <b>DATOS CLINICOS</b>
                 </h4>
@@ -293,7 +314,7 @@ export default class NewNote extends Component {
                   </div>
                   <div className="col-md-3 mb-3"> </div>
                   <div className="col-md-3 mb-3">
-                    <label htmlFor="paisContagio">22. PA&Iacute;S DE CONTAGIO</label>
+                    <label htmlFor="paisContagio">22. PAIS DE CONTAGIO</label>
                     <select className="custom-select d-block" id="paisContagio" required>
                       <option value>Seleccione</option>
                       <option value="paisContagio1">1. Chile</option>
@@ -354,6 +375,7 @@ export default class NewNote extends Component {
                       </div>
                     </div>
                   </div>
+                  <div className="col-md-3 mb-3"> </div>
                   <div className="col-md-3 mb-3">
                     <label htmlFor="embarazo">27. EMBARAZO</label>
                     <select className="custom-select d-block" id="state" required>
@@ -365,30 +387,122 @@ export default class NewNote extends Component {
                     <div className="invalid-feedback"> Please provide a valid state. </div>
                   </div>
                 </div>
+                <hr className="mb-2 border-dark" />
+                <h4 className="mb-2"> </h4>
+                <h4 className="mb-2 text-left">
+                  <b>COMPLETAR S&Oacute;LO SI LA DECLARACI&Oacute;N CORRESPONDE A TBC</b>
+                </h4>
+                <div className="row" draggable="true">
+                  <div className="col-md-3 mb-3"> </div>
+                  <div className="col-md-3 mb-3">
+                    <label htmlFor="tbc">28. INDICAR SI CORRESPONDE A:</label>
+                    <select className="custom-select d-block" id="state" required>
+                      <option value>Seleccione</option>
+                      <option value="tbc1">1. Caso Nuevo</option>
+                      <option value="tbc2">2. Recaida</option>
+                    </select>
+                    <div className="invalid-feedback"> Please provide a valid state. </div>
+                  </div>
+                  <div className="col-md-3 mb-3">
+                    <label htmlFor="recaidas">29. S&Oacute;LO PARA RECAIDAS</label>
+                    <select className="custom-select d-block" id="state" required>
+                      <option value>Seleccione</option>
+                      <option value="recaidas1">1. Igual Localizaci&oacute;n</option>
+                      <option value="recaidas2">2. Otra</option>
+                    </select>
+                    <div className="invalid-feedback"> Please provide a valid state. </div>
+                  </div>
+                  <div className="col-md-3 mb-3"> </div>
+                </div>
+                <hr className="mb-2 border-dark" />
+                <h4 className="mb-2"> </h4>
+                <h4 className="mb-2">
+                  <b>DATOS DEL PERSONAL QUE NOTIFICA</b>
+                </h4>
+                <label htmlFor="username">30. NOMBRE</label>
+                <div className="row" draggable="true">
+                  <div className="col-md-3 mb-3">
+                    <label htmlFor="lastName2">Apellido Paterno</label>
+                    <input type="text" className="form-control" required id="lastName2" />
+                    <div className="invalid-feedback py-4"> Nombre de establecimiento es requerido. </div>
+                  </div>
+                  <div className="col-md-3 mb-3">
+                    <label htmlFor="motherlastName2">Apellido Materno</label>
+                    <input type="text" className="form-control" id="motherlastName2" required />
+                    <div className="invalid-feedback"> Valid last name is required. </div>
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="Names2">Nombres</label>
+                    <input type="text" className="form-control" id="names2" required />
+                    <div className="invalid-feedback"> Valid last name is required. </div>
+                    <div className="col-md-3 mb-3"> </div>
+                  </div>
+                </div>
+                <div className="row" draggable="true">
+                  <div className="col-md-3 mb-3">
+                    <label htmlFor="phone2">31. TEL&Eacute;FONO</label>
+                    <input type="text" className="form-control" required id="phone2" />
+                    <div className="invalid-feedback py-4"> Nombre de establecimiento es requerido. </div>
+                  </div>
+                  <div className="col-md-3 mb-3">
+                    <label htmlFor="mail2">Correo Electr&oacute;nico</label>
+                    <input type="text" className="form-control" required id="mail2" />
+                    <div className="invalid-feedback"> Valid last name is required. </div>
+                  </div>
+                  <div className="col-md-3 mb-3"> </div>
+                  <div className="col-md-3 mb-3">
+                    <label htmlFor="rut2">32. RUT</label>
+                    <input type="text" className="form-control" id="rut2" placeholder="########-#" required />
+                    <div className="invalid-feedback"> RUT valido requerido. </div>
+                  </div>
+                </div>
+                <hr className="mb-2 border-dark" />
+                <h4 className="mb-2"> </h4>
+                <h4 className="mb-2">
+                  <b>FECHA DE NOTIFICACI&Oacute;N</b>
+                </h4>
+                <div className="row" draggable="true">
+                  <div className="col-md-3 mb-3">
+                    <label htmlFor="fechanotificacion1">33. FECHA DE NOTIFICACI&Oacute;N</label>
+                  </div>
+                  <div className="col-md-3 mb-3">
+                    <input type="date" className="form-control" required id="fechanotificacion1" />
+                    <div className="invalid-feedback"> Valid last name is required. </div>
+                  </div>
+                  <div className="col-md-3 mb-3">
+                    <label htmlFor="fechanotificacion2">34. FECHA DE NOTIFICACI&Oacute;N DESDE LA SEREMI AL MINSAL</label>
+                  </div>
+                  <div className="col-md-3 mb-3">
+                    <input type="date" className="form-control" id="fechanotificacion2" required />
+                    <div className="invalid-feedback"> Valid last name is equired. </div>
+                  </div>
+                </div>
+                <hr className="mb-2 border-dark" />
+                <h4 className="mb-2"> </h4>
               </div>
             </form>
-          </div>
-        </div>
-        <div className="py-5 text-muted text-center">
-          <div className="container">
-            <div className="row">
-              <div className="col-md-12 my-4">
-                <p className="mb-1">&copy; 2018-2019 I2Salud</p>
-                <ul className="list-inline">
-                  <li className="list-inline-item">
-                    <a href="#">Privacy</a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a href="#">Terms</a>
-                  </li>
-                  <li className="list-inline-item">
-                    <a href="#">Support</a>
-                  </li>
-                </ul>
+            <div className="py-5 text-muted text-center">
+              <div className="container">
+                <div className="row">
+                  <div className="col-md-12 my-4">
+                    <p className="mb-1">&copy; 2018-2019 I2Salud</p>
+                    <ul className="list-inline">
+                      <li className="list-inline-item">
+                        <a href="#">Privacy</a>
+                      </li>
+                      <li className="list-inline-item">
+                        <a href="#">Terms</a>
+                      </li>
+                      <li className="list-inline-item">
+                        <a href="#">Support</a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>     
+        </div>
       </div>
 			
 		);
