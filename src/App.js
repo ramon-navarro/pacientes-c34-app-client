@@ -60,6 +60,11 @@ class App extends Component {
 								<NavItem>Notificar</NavItem>
 							</LinkContainer>
 						</Nav>
+						<Nav>
+							<LinkContainer to="/reportes">
+								<NavItem>Reportes</NavItem>
+							</LinkContainer>
+						</Nav>
 						<Nav pullRight>					
 							{this.state.isAuthenticated
 							? /*Si*/
