@@ -61,6 +61,11 @@ class App extends Component {
 							</LinkContainer>
 						</Nav>
 						<Nav>
+							<LinkContainer to="/consultar">
+								<NavItem>Consultar</NavItem>
+							</LinkContainer>
+						</Nav>
+						<Nav>
 							<LinkContainer to="/reportes">
 								<NavItem>Reportes</NavItem>
 							</LinkContainer>
@@ -80,6 +85,7 @@ class App extends Component {
 					</Navbar.Collapse>
 				</Navbar>
 				<Routes childProps={childProps} />
+		
 			</div>
 		);
 	}
